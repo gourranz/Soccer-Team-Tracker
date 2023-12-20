@@ -3,6 +3,7 @@
 ## By: Zakaria Gourrane
 
 ![Image](https://i.ibb.co/qM750x4/Untitled-Diagram-drawio.png)
+![Image](https://i.ibb.co/41Ft0nZ/Untitled-Diagram-drawio-1.png)
 ***
 ### Description
   #### Soccer Team Tracker is a full-stack web application that allows users to manage and track information about soccer teams, players, and matches.
@@ -44,3 +45,4 @@
 
 - **Deployment:**
   - Heroku
+
