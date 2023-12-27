@@ -1,20 +1,14 @@
+// routes/team.js
 const express = require('express');
 const router = express.Router();
 const teamController = require('../controllers/team');
 
-// Home route
-router.get('/', teamController.renderDashboard);
-
-// Team routes
+router.get('/dashboard', teamController.renderDashboard);
 router.get('/teams', teamController.getAllTeams);
+router.get('/teams/add', teamController.renderAddTeamForm);
 router.post('/teams', teamController.addTeam);
 
-// Other routes
-router.get('/dashboard', teamController.renderDashboard);
-router.get('/teams', teamController.renderTeams);
-router.get('/players', teamController.renderPlayers);
-router.get('/schedule', teamController.renderSchedule);
-router.get('/statistics', teamController.renderStatistics);
-router.get('/login', teamController.renderLogin);
+
+// Add other routes as needed
 
 module.exports = router;

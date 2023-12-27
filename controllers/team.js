@@ -1,35 +1,37 @@
 const Team = require('../models/team');
 
-const teamList = [];
-
 const teamController = {
-  getAllTeams: (req, res) => {
-    res.json(teamList);
-  },
-  addTeam: (req, res) => {
-    const { name, country, coach } = req.body;
-    const newTeam = new Team(name, country, coach);
-    teamList.push(newTeam);
-    res.json({ message: 'Team added successfully', team: newTeam });
-  },
   renderDashboard: (req, res) => {
     res.render('dashboard', { title: 'Dashboard' });
   },
-  renderTeams: (req, res) => {
-    res.render('teams', { title: 'Teams' });
+
+  getAllTeams: async (req, res) => {
+    try {
+      const teamList = await Team.find();
+      res.render('teams', { title: 'Teams', teamList });
+    } catch (error) {
+      console.error('Error fetching teams:', error);
+      res.status(500).send('Internal Server Error');
+    }
   },
-  renderPlayers: (req, res) => {
-    res.render('players', { title: 'Players' });
+
+  renderAddTeamForm: (req, res) => {
+    res.render('add-team', { title: 'Add Team' });
   },
-  renderSchedule: (req, res) => {
-    res.render('schedule', { title: 'Schedule' });
+
+  addTeam: async (req, res) => {
+    try {
+      const { teamName, country, coach } = req.body;
+      const newTeam = new Team({ teamName, country, coach });
+      await newTeam.save();
+      res.redirect('/teams');
+    } catch (error) {
+      console.error('Error adding team:', error);
+      res.status(500).send('Internal Server Error');
+    }
   },
-  renderStatistics: (req, res) => {
-    res.render('statistics', { title: 'Statistics' });
-  },
-  renderLogin: (req, res) => {
-    res.render('login', { title: 'Login' });
-  },
+
+  // Add other render methods as needed (renderPlayers, renderSchedule, renderStatistics, renderLogin).
 };
 
 module.exports = teamController;

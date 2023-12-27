@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const teamSchema = new mongoose.Schema({
-  name: String,
-  coach: String,
-  players: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }],
+  teamName: { type: String, required: true },
+  country: { type: String, required: true },
+  coach: { type: String, required: true },
 });
 
 const Team = mongoose.model('Team', teamSchema);
 
 module.exports = Team;
+

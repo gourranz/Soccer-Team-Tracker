@@ -1,10 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-
-// This app has no "home" page, but your projects should 😀
 router.get('/', function(req, res, next) {
-  res.redirect('/team');
+  res.redirect('/team/dashboard');
 });
 
 module.exports = router;
