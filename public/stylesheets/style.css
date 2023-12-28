@@ -11,10 +11,8 @@ body {
 
 header {
   background-color: #333;
-  color: white;
+  color: #fff;
   padding: 10px;
-  text-align: center;
-  opacity: 0.5;
 }
 
 nav ul {
@@ -23,34 +21,67 @@ nav ul {
   padding: 0;
 }
 
-nav li {
-  display: inline;
-  margin-right: 10px;
+nav ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+nav a:hover {
+  color: #ffd700; /* Change color on hover, e.g., to gold */
 }
 
 main {
   padding: 20px;
-  display: flex;
-  flex-direction: column; /* Display boxes in a column layout */
-}
-
-.section-box {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: #fff;
-  flex: 1; /* Take equal space in the flex container */
-  width: 80%; /* Set the width to 80% of the viewport width */
-  margin: auto; /* Center the box horizontally */
 }
 
 footer {
   background-color: #333;
-  color: white;
+  color: #fff;
   padding: 10px;
   text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.team-list {
+  margin: 0;
+  padding: 0;
+}
+
+.team-item {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+span {
+  font-weight: bold;
+  color: #3498db; /* Adjust the color as needed */
+}
+.player-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.player-item {
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.player-item span {
+  font-weight: bold;
+  margin-right: 5px;
 }

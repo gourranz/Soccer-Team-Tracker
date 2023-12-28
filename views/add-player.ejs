@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <body>
+        <header>
+          <h1><%= title %></h1>
+          <nav>
+            <ul>
+              <li><a href="/">Dashboard</a></li>
+              <li><a href="/teams">Teams</a></li>
+              <li><a href="/players">Players</a></li>
+              <li><a href="/schedule">Schedule</a></li>
+              <li><a href="/statistics">Statistics</a></li>
+              <li><a href="/login">Login</a></li>
+            </ul>
+          </nav>
+        </header>
+        <main>
+          <h2>Add Player</h2>
+          <form action="/players" method="POST">
+            <label for="playerName"><span>Player Name:</span></label>
+            <input type="text" id="playerName" name="playerName" required>
+            
+            <label for="position"><span>Position:</span></label>
+            <input type="text" id="position" name="position" required>
+      
+            <label for="team"><span>Team:</span></label>
+            <select id="team" name="team" required>
+              <% teamList.forEach(team => { %>
+                <option value="<%= team._id %>"><%= team.teamName %></option>
+              <% }); %>
+            </select>
+            
+            <button type="submit">Add Player</button>
+          </form>
+        </main>
+        <footer>
+          <!-- Your footer content goes here -->
+        </footer>
+      </body>
+    
+    <
+</body>
+</html>
+
+

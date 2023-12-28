@@ -1,5 +1,14 @@
 <%- include("./partials/header.ejs")    %>
-
-
+<link rel="stylesheet" href="/stylesheets/style.css">
+<main>
+    <h2>Teams</h2>
+    <ul class="team-list">
+      <% teamList.forEach(team => { %>
+        <li class="team-item">
+          <%= team.teamName %> - <%= team.country %> (Coach: <%= team.coach %>)
+        </li>
+      <% }); %>
+    </ul>
+  </main>
 
 <%- include("./partials/footer")    %>

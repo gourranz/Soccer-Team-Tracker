@@ -8,9 +8,10 @@ var logger = require('morgan');
 require('dotenv').config();
 // connect to the database with AFTER the config vars are processed
 require('./config/database');
-
+//server.js
 const indexRouter = require('./routes/index');
 const teamRouter = require('./routes/team');
+const playerRouter = require('./routes/players');
 
 
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/teams', teamRouter);
+app.use('/players', playerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
