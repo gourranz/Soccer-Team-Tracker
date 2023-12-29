@@ -85,3 +85,18 @@ span {
   font-weight: bold;
   margin-right: 5px;
 }
+
+.dashboard-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.dashboard-button:hover {
+  background-color: #2980b9;
+}

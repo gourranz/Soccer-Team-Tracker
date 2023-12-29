@@ -1,0 +1,8 @@
+<%- include("./partials/header.ejs")    %>
+  <h1><%= title %></h1>
+  <ul>
+    <% scheduleData.forEach(game => { %>
+      <li><%= game.date %> - <%= game.teams.home %> vs <%= game.teams.away %></li>
+    <% }); %>
+  </ul>
+  <%- include("./partials/footer")    %>

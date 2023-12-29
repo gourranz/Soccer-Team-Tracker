@@ -8,10 +8,12 @@ var logger = require('morgan');
 require('dotenv').config();
 // connect to the database with AFTER the config vars are processed
 require('./config/database');
+
 //server.js
 const indexRouter = require('./routes/index');
 const teamRouter = require('./routes/team');
 const playerRouter = require('./routes/players');
+const scheduleRouter = require('./routes/schedule')
 
 
 
@@ -30,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/teams', teamRouter);
 app.use('/players', playerRouter);
+app.use('/schedule', scheduleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,14 +40,17 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
-  res.locals.message = err.message;
+  const errorMessage = err.message || 'An error occurred';
+  res.locals.message = errorMessage;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  // Log the error for debugging
+  console.error('Error:', err);
 
+  // Render the error page
+  res.status(err.status || 500);
+  res.render('error', { title: 'Error', message: errorMessage, error: err });
+});
 module.exports = app;
