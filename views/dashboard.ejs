@@ -12,13 +12,16 @@
       <ul>
         <li><a href="/">Dashboard</a></li>
         <li><a href="/teams">Teams</a></li>
-        <li><a href="/teams/add">Add Team</a></li>
         <li><a href="/players">Players</a></li>
-        <li><a href="/players/add">Add Players</a></li>
         <li><a href="/schedule">Schedule</a></li>
         <li><a href="/statistics">Statistics</a></li>
-        <li><a href="/login">Login</a></li>
-        
+        <% if (user) { %>
+        <li><a href="/teams/add">Add Team</a></li>
+        <li><a href="/players/add">Add Players</a></li>
+        <a href="/logout">LOG OUT</a>
+        <% } else { %>
+          <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
+        <% } %>
       </ul>
     </nav>
   </footer>
