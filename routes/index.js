@@ -18,13 +18,13 @@ router.get('/auth/google', passport.authenticate(
 router.get('/oauth2callback', passport.authenticate(
   'google',
   {
-    successRedirect: '/teams',
-    failureRedirect: '/teams'
+    successRedirect: '/teams/dashboard',
+    failureRedirect: '/teams/dashboard'
   }
 ));
 router.get('/logout', function(req, res){
   req.logout(function() {
-    res.redirect('/teams');
+    res.redirect('/teams/dashboard');
   });
 });
 

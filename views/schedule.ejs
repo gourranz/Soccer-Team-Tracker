@@ -1,8 +1,44 @@
-<%- include("./partials/header.ejs")    %>
-  <h1><%= title %></h1>
-  <ul>
-    <% scheduleData.forEach(game => { %>
-      <li><%= game.date %> - <%= game.teams.home %> vs <%= game.teams.away %></li>
-    <% }); %>
-  </ul>
-  <%- include("./partials/footer")    %>
+<%- include("./partials/header.ejs") %>
+<div class="team-details">
+  <form action="/schedule" method="get">
+    <label for="teamName">Enter Team Name:</label>
+    <input type="text" id="teamName" name="teamName" required>
+    <button type="submit">View Details</button>
+  </form>
+
+  <% if (team) { %>
+    <h2><%= team.name %></h2>
+    <div class="team-info">
+      <p><strong>League:</strong> <%= team.league %></p>
+      <p><strong>Season:</strong> <%= team.season %></p>
+      <p><strong>Official Name:</strong> <%= team.officialName %></p>
+      <p><strong>Address:</strong> <%= team.address %></p>
+      <p><strong>Website:</strong> <a href="<%= team.website %>" target="_blank"><%= team.website %></a></p>
+      <p><strong>Founded:</strong> <%= team.founded %></p>
+      <p><strong>Team Size:</strong> <%= team.teamSize %></p>
+      <p><strong>Average Age:</strong> <%= team.averageAge %></p>
+    </div>
+
+    <% if (team.managers && Array.isArray(team.managers)) { %>
+      <h3>Managers</h3>
+      <ul class="managers-list">
+        <% team.managers.forEach(function (manager) { %>
+          <li class="manager-item">
+            <strong>Name:</strong> <%= manager.name %><br>
+            <strong>Age:</strong> <%= manager.age %><br>
+            <strong>Appointed:</strong> <%= manager.appointed %><br>
+            <strong>Contract Expires:</strong> <%= manager.contractExpires %><br>
+            <strong>Active:</strong> <%= manager.active ? 'Yes' : 'No' %>
+          </li>
+        <% }); %>
+      </ul>
+    <% } else { %>
+      <p>No manager information available.</p>
+    <% } %>
+
+  <% } else { %>
+    <p>Team details not available.</p>
+  <% } %>
+</div>
+
+<%- include("./partials/footer") %>
