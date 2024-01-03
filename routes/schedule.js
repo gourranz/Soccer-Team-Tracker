@@ -4,7 +4,7 @@ const axios = require('axios');
 
 router.get('/', async (req, res, next) => {
   try {
-    // You can provide a default value or handle the case when teamName is not available
+   
     const teamName = req.query.teamName || 'defaultTeamName';
 
     const options = {
@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
       url: `https://heisenbug-seriea-live-scores-v1.p.rapidapi.com/api/serie-a/team`,
       params: { name: teamName },
       headers: {
-        'X-RapidAPI-Key': 'c248959cdfmsh9d134ec89afe96dp1a2eaejsnfff0f46dab53',
+        'X-RapidAPI-Key': '84d39c9008msh5350ee9223db3b8p178ad6jsnc94cd4ee6b3f',
         'X-RapidAPI-Host': 'heisenbug-seriea-live-scores-v1.p.rapidapi.com'
       }
     };

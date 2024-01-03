@@ -32,17 +32,12 @@
             <input type="text" id="position" name="position" required>
       
             <label for="team"><span>Team:</span></label>
-            <select id="team" name="team" required>
-              <% teamList.forEach(team => { %>
-                <option value="<%= team._id %>"><%= team.teamName %></option>
-              <% }); %>
-            </select>
+            <input type="text" id="team" name="team" required>
             
             <button type="submit">Add Player</button>
           </form>
         </main>
         <footer>
-          <!-- Your footer content goes here -->
         </footer>
       </body>
     

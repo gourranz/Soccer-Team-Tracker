@@ -8,14 +8,6 @@ router.get('/dashboard', teamController.renderDashboard);
 router.get('/', teamController.getAllTeams);
 router.get('/add', teamController.renderAddTeamForm);
 router.post('/', teamController.addTeam);
-router.get('/users', async (req, res, next) => {
-  try {
-    const users = await User.find().populate('favoriteTeams addedPlayers');
-    res.render('users', { title: 'Users', users });
-  } catch (error) {
-    console.error(error);
-    res.render('error', { error });
-  }
-});
+router.post('/delete/:id', teamController.deleteTeam);
 
 module.exports = router;

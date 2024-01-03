@@ -1,5 +1,7 @@
 // controllers/player.js
 const Player = require('../models/player');
+const User = require('../models/user');
+
 
 const playerController = {
   renderDashboard: (req, res) => {
@@ -8,7 +10,7 @@ const playerController = {
 
   getAllPlayers: async (req, res) => {
     try {
-      const playerList = await Player.find().populate('team addedBy');
+      const playerList = await Player.find({}).populate('user', 'name avatar'); // Populate the 'user' field with 'name' and 'avatar'
       console.log('Player List:', playerList);
       res.render('players', { title: 'Players', playerList });
     } catch (error) {
@@ -16,6 +18,8 @@ const playerController = {
       res.status(500).render('error', { error });
     }
   },
+
+
   renderPlayers: async (req, res) => {
     try {
       const playerList = await Player.find().populate('team');
@@ -37,41 +41,58 @@ const playerController = {
 
   addPlayer: async (req, res) => {
     try {
-      const { playerName, position, team } = req.body;
-      
-      // Extract user details
-      const { _id: userId, name: userName, avatar: userAvatar } = req.user;
+        const { playerName, position, team } = req.body;
+
+        // Extract user details
+        const { _id: userId, name: userName, avatar: userAvatar } = req.user;
+
   
-      // Set user details to request body
-      req.body.user = userId;
-      req.body.userName = userName;
-      req.body.userAvatar = userAvatar;
-  
-      // Create new player with addedBy field
-      const newPlayer = new Player({
-        playerName,
-        position,
-        team,
-        addedBy: {
-          id: userId,
-          name: userName,
-          avatar: userAvatar
-        }
-      });
-  
-      console.log('New Player:', newPlayer);
-  
-      // Save the new player
-      await newPlayer.save();
-      console.log('Player saved successfully');
-  
-      // Redirect to players page
-      return res.redirect('/players');
+        const newPlayer = new Player({
+            playerName,
+            position,
+            team,
+            user: userId,
+            userName,
+            userAvatar
+        });
+
+        console.log('New Player:', newPlayer);
+
+        await newPlayer.save();
+        console.log('Player saved successfully');
+
+     
+        await User.findByIdAndUpdate(userId, { $push: { addedPlayers: newPlayer._id } });
+
+        // Redirect to players page
+        res.redirect('/players');
     } catch (error) {
-      console.error('Error adding player:', error);
-      return res.status(500).render('error', { error });
+        console.error('Error adding player:', error);
+        res.status(500).render('error', { error });
     }
-  },
+},
+deletePlayer: async (req, res) => {
+  try {
+    const playerId = req.params.id;
+
+    // Use findOneAndDelete to find and delete the player
+    const deletedPlayer = await Player.findOneAndDelete({ _id: playerId });
+
+    if (!deletedPlayer) {
+      // Player not found
+      return res.status(404).render('error', { message: 'Player not found' });
+    }
+
+    // Remove player ID from the user's addedPlayers array
+    await User.findByIdAndUpdate(deletedPlayer.user, { $pull: { addedPlayers: deletedPlayer._id } });
+
+    // Redirect to players page
+    res.redirect('/players');
+  } catch (error) {
+    console.error('Error deleting player:', error);
+    res.status(500).render('error', { error });
+  }
+},
 };
 
 module.exports = playerController;

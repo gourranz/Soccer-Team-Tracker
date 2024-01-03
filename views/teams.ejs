@@ -1,16 +1,18 @@
 <%- include("./partials/header.ejs")    %>
 <link rel="stylesheet" href="/stylesheets/style.css">
 <main>
-    <h2>Teams</h2>
-    <ul class="team-list">
+  
+    <div class="team-container">
       <% teamList.forEach(team => { %>
-        <li class="team-item">
-          <%= team.teamName %> - <%= team.country %> (Coach: <%= team.coach %>)
-          <strong>Added By:</strong> <%= team.addedBy.name %><br>
-        </li>
-      <% }); %>
-    </ul>
-    <a href="/teams/dashboard" class="dashboard-button">Back to Dashboard</a>
-  </main>
+        <div class="team-info">
+         <strong>Team: </strong>  <%= team.teamName %> <strong>Country: </strong>  <%= team.country %> (Coach: <%= team.coach %>)
+      <form action="/teams/delete/<%= team._id %>" method="post">
+        <button class="remove-button" type="submit">Remove</button>
+      </form>
+    </div>
+  <% }); %>
 
-<%- include("./partials/footer")    %>
+  <a href="/teams/dashboard" class="dashboard-button">Back to Dashboard</a>
+</main>
+
+<%- include("./partials/footer") %>

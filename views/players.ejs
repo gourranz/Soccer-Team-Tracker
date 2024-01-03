@@ -1,14 +1,18 @@
 <!-- views/players.ejs -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
+
 <body>
-    <h1><%= title %></h1>
+    <h1>
+        <%= title %>
+    </h1>
     <nav>
         <ul>
             <li><a href="/">Dashboard</a></li>
@@ -23,23 +27,36 @@
     <main>
         <h2>Players</h2>
         <ul class="player-list">
-            <% playerList.forEach(player => { %>
+            <% playerList.forEach(player=> { %>
                 <li class="player-item">
-                    <span>Name:</span> <%= player.playerName %> -
-                    <span>Position:</span> <%= player.position %> (Team:
-                    <span>Team:</span> <%= player.team %>) <!-- Adjust this line -->
-                    <strong>Added By:</strong>
-                    <td class="review-user">
-                        <% if (player.addedBy) { %>
-                            <img alt="avatar" src="<%= player.addedBy.userAvatar %>" referrerpolicy="no-referrer" ><%= player.addedBy.userName %>
-                        <% } else { %>
-                            Unknown
-                        <% } %>
-                    </td>
+                    <%= console.log('Player:', player) %>
+                        <%= console.log('Player.user:', player.user) %>
+                            <span>Name:</span>
+                            <%= player.playerName %> -
+                                <span>Position:</span>
+                                <%= player.position %> (Team:
+                                    <span>Team:</span>
+                                    <%= player.team %>) <!-- Adjust this line -->
+                                        <% console.log('Player:', player) %>
+                                            <strong>Added By:</strong>
+                                            <td class="review-user">
+                                                <% if (player.user) { %>
+                                                    <img alt="avatar" src="<%= player.user.userAvatar %>"
+                                                        referrerpolicy="no-referrer">
+                                                    <%= player.user.userName || 'Unknown' %>
+                                                        <% } else { %>
+                                                            <img alt="default-icon" src="/path/to/generic-icon.png">
+                                                            Unknown
+                                                            <% } %>
+                                            </td>
+                                            <form action="/players/delete/<%= player._id %>" method="post">
+                                                <button type="submit">Remove</button>
+                                            </form>
                 </li>
-            <% }); %>
+                <% }); %>
         </ul>
         <a href="/teams/dashboard" class="dashboard-button">Back to Dashboard</a>
     </main>
 </body>
+
 </html>
