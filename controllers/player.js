@@ -1,37 +1,36 @@
-//controllers/player.js
+// controllers/player.js
 const Player = require('../models/player');
-const Team = require('../models/team')
 
 const playerController = {
-        renderDashboard: (req, res) => {
-          res.render('dashboard', { title: 'Dashboard' });
-        },
-        getAllPlayers: async (req, res) => {
-            try {
-              const playerList = await Player.find().populate('team'); // Update to use Player model
-              res.render('players', { title: 'Players', playerList });
-            } catch (error) {
-              console.error('Error fetching players:', error);
-              res.status(500).render('error', { error }); // Render an error page
-            }
-          },
+  renderDashboard: (req, res) => {
+    res.render('dashboard', { title: 'Dashboard' });
+  },
 
-          renderPlayers: async (req, res) => {
-            try {
-              const playerList = await Player.find().populate('team');
-              res.render('players', { title: 'Players', playerList });
-            } catch (error) {
-              console.error('Error rendering players:', error);
-              res.status(500).render('error', { error, message: 'Internal Server Error' });
-            }
-          },
+  getAllPlayers: async (req, res) => {
+    try {
+      const playerList = await Player.find().populate('team addedBy');
+      console.log('Player List:', playerList);
+      res.render('players', { title: 'Players', playerList });
+    } catch (error) {
+      console.error('Error fetching players:', error);
+      res.status(500).render('error', { error });
+    }
+  },
+  renderPlayers: async (req, res) => {
+    try {
+      const playerList = await Player.find().populate('team');
+      res.render('players', { title: 'Players', playerList });
+    } catch (error) {
+      console.error('Error rendering players:', error);
+      res.status(500).render('error', { error, message: 'Internal Server Error' });
+    }
+  },
 
   renderAddPlayerForm: async (req, res) => {
     try {
-      const teamList = await Team.find();
-      res.render('add-player', { title: 'Add Player', teamList });
+      res.render('add-player', { title: 'Add Player' });
     } catch (error) {
-      console.error('Error fetching teams for player form:', error);
+      console.error('Error rendering player form:', error);
       res.status(500).send('Internal Server Error');
     }
   },
@@ -39,15 +38,38 @@ const playerController = {
   addPlayer: async (req, res) => {
     try {
       const { playerName, position, team } = req.body;
-      console.log('Received data:', { playerName, position, team });
-      const newPlayer = new Player({ playerName, position, team });
+      
+      // Extract user details
+      const { _id: userId, name: userName, avatar: userAvatar } = req.user;
+  
+      // Set user details to request body
+      req.body.user = userId;
+      req.body.userName = userName;
+      req.body.userAvatar = userAvatar;
+  
+      // Create new player with addedBy field
+      const newPlayer = new Player({
+        playerName,
+        position,
+        team,
+        addedBy: {
+          id: userId,
+          name: userName,
+          avatar: userAvatar
+        }
+      });
+  
       console.log('New Player:', newPlayer);
+  
+      // Save the new player
       await newPlayer.save();
       console.log('Player saved successfully');
-      res.redirect('/players');
+  
+      // Redirect to players page
+      return res.redirect('/players');
     } catch (error) {
       console.error('Error adding player:', error);
-      res.status(500).send('Internal Server Error');
+      return res.status(500).render('error', { error });
     }
   },
 };
