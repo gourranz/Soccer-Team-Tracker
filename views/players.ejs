@@ -1,4 +1,4 @@
-
+<!-- views/players.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,29 +10,36 @@
 <body>
     <h1><%= title %></h1>
     <nav>
-      <ul>
-        <li><a href="/">Dashboard</a></li>
-        <li><a href="/teams">Teams</a></li>
-        <li><a href="/players">Players</a></li>
-        <li><a href="/schedule">Schedule</a></li>
-        <li><a href="/statistics">Statistics</a></li>
-        <li><a href="/login">Login</a></li>
-      </ul>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/teams">Teams</a></li>
+            <li><a href="/players">Players</a></li>
+            <li><a href="/schedule">Schedule</a></li>
+            <li><a href="/statistics">Statistics</a></li>
+            <li><a href="/login">Login</a></li>
+        </ul>
     </nav>
 
     <main>
         <h2>Players</h2>
         <ul class="player-list">
-          <% playerList.forEach(player => { %>
-            <li class="player-item">
-              <span>Name:</span> <%= player.playerName %> -
-              <span>Position:</span> <%= player.position %> (Team:
-              <span>Team:</span> <%= player.team ? player.team.teamName : 'No Team' %>)
-            </li>
-          <% }); %>
+            <% playerList.forEach(player => { %>
+                <li class="player-item">
+                    <span>Name:</span> <%= player.playerName %> -
+                    <span>Position:</span> <%= player.position %> (Team:
+                    <span>Team:</span> <%= player.team %>) <!-- Adjust this line -->
+                    <strong>Added By:</strong>
+                    <td class="review-user">
+                        <% if (player.addedBy) { %>
+                            <img alt="avatar" src="<%= player.addedBy.userAvatar %>" referrerpolicy="no-referrer" ><%= player.addedBy.userName %>
+                        <% } else { %>
+                            Unknown
+                        <% } %>
+                    </td>
+                </li>
+            <% }); %>
         </ul>
         <a href="/teams/dashboard" class="dashboard-button">Back to Dashboard</a>
-      </main>
+    </main>
 </body>
 </html>
- 
