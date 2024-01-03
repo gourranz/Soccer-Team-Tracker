@@ -6,6 +6,7 @@
       <% teamList.forEach(team => { %>
         <li class="team-item">
           <%= team.teamName %> - <%= team.country %> (Coach: <%= team.coach %>)
+          <strong>Added By:</strong> <%= team.addedBy.name %><br>
         </li>
       <% }); %>
     </ul>
