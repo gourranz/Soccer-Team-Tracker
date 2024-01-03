@@ -9,21 +9,6 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
-<body>
-    <h1>
-        <%= title %>
-    </h1>
-    <nav>
-        <ul>
-            <li><a href="/">Dashboard</a></li>
-            <li><a href="/teams">Teams</a></li>
-            <li><a href="/players">Players</a></li>
-            <li><a href="/schedule">Schedule</a></li>
-            <li><a href="/statistics">Statistics</a></li>
-            <li><a href="/login">Login</a></li>
-        </ul>
-    </nav>
-
     <main>
         <h2>Players</h2>
         <ul class="player-list">
@@ -36,19 +21,7 @@
                                 <span>Position:</span>
                                 <%= player.position %> (Team:
                                     <span>Team:</span>
-                                    <%= player.team %>) <!-- Adjust this line -->
-                                        <% console.log('Player:', player) %>
-                                            <strong>Added By:</strong>
-                                            <td class="review-user">
-                                                <% if (player.user) { %>
-                                                    <img alt="avatar" src="<%= player.user.userAvatar %>"
-                                                        referrerpolicy="no-referrer">
-                                                    <%= player.user.userName || 'Unknown' %>
-                                                        <% } else { %>
-                                                            <img alt="default-icon" src="/path/to/generic-icon.png">
-                                                            Unknown
-                                                            <% } %>
-                                            </td>
+                                    <%= player.team %>) 
                                             <form action="/players/delete/<%= player._id %>" method="post">
                                                 <button type="submit">Remove</button>
                                             </form>
