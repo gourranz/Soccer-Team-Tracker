@@ -9,7 +9,7 @@ const teamController = {
 
   getAllTeams: async (req, res) => {
     try {
-      const teamList = await Team.find();
+      const teamList = await Team.find().populate('addedBy');
       res.render('teams', { title: 'Teams', teamList });
     } catch (error) {
       console.error('Error fetching teams:', error);
@@ -33,7 +33,6 @@ const teamController = {
     }
   },
 
-  // Add other render methods as needed (renderPlayers, renderSchedule, renderStatistics, renderLogin).
 };
 
 module.exports = teamController;
